@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fortune’s Weave: favorite characters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#e8edee;--card:#f8fafa;--ink:#13262d;--mut:#5c6f76;--line:#cdd8db;--acc:#1b6a73;--gold:#b07a22;--track:#dbe4e6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a1f;--card:#15262d;--ink:#e6eef0;--mut:#93a8af;--line:#2a4049;--acc:#5fc0c9;--gold:#e0a94a;--track:#22373f}}
+:root[data-theme="dark"]{--bg:#0d1a1f;--card:#15262d;--ink:#e6eef0;--mut:#93a8af;--line:#2a4049;--acc:#5fc0c9;--gold:#e0a94a;--track:#22373f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Figtree,system-ui,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 48px}
+h1{font:700 clamp(1.5rem,5vw,2.2rem)/1.15 Cinzel,Georgia,serif;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 18px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center}
+.tabs{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tabs button{border:0;background:transparent;color:var(--ink);padding:8px 14px;font:inherit;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--acc);color:#fff}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;max-width:100%}
+input[type=search]{flex:1 1 150px;min-width:0}
+button.b{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer}
+button.p{background:var(--gold);border-color:var(--gold);color:#17120a;font-weight:600}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.note{background:var(--card);border-left:4px solid var(--gold);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card{overflow:hidden}.card.fav{border-color:var(--gold)}
+.ph{display:grid;place-items:center;width:calc(100% + 28px);margin:-14px -14px 12px;padding:0;border:0;aspect-ratio:3/4;background:var(--track);overflow:hidden;cursor:pointer}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ini{font:700 4rem Cinzel,Georgia,serif;color:var(--mut);opacity:.6}
+.av{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:top;margin:0 0 6px auto;background:var(--track);color:var(--mut);font:700 1.3rem Cinzel,Georgia,serif;overflow:hidden}
+.imgrow{display:flex;gap:8px;align-items:center}.imgrow input{flex:1;min-width:0}
+.top{display:flex;justify-content:space-between;gap:8px;margin-bottom:10px}
+h3{font:700 1.15rem/1.2 Cinzel,Georgia,serif;margin:0}
+small{color:var(--mut)}
+.star{border:0;background:none;font-size:1.6rem;line-height:1;cursor:pointer;color:var(--mut);padding:2px 6px}
+.star.on{color:var(--gold)}
+.card .b{margin-top:10px;width:100%}
+.ct{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+.ctb{display:flex;flex-wrap:wrap;gap:4px}
+.ctb button{font:inherit;font-size:.75rem;border:1px solid var(--line);background:var(--track);color:var(--mut);border-radius:6px;padding:3px 8px;cursor:pointer;white-space:nowrap}
+.ctb button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+.ct>p{margin:6px 0 0;font-size:.85rem}
+.ct>p span{display:block;color:var(--mut);font-size:.75rem;font-weight:600}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:420px}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;color:var(--mut)}
+th{font:700 .95rem Cinzel,Georgia,serif}
+dialog{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:18px;width:min(460px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.l{display:block;font-size:.85rem;color:var(--mut)}
+.l input{width:100%}
+textarea{height:200px;width:100%;font:12px/1.4 ui-monospace,monospace}
+.act{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.empty{color:var(--mut);padding:24px 0}
+.gh{font:700 1.15rem Cinzel,Georgia,serif;margin:24px 0 10px}.gh small{font:400 .9rem Figtree,system-ui,sans-serif;color:var(--mut)}
+.avl{margin-top:10px;font-size:.8rem;color:var(--mut);padding-top:8px;border-top:1px solid var(--line)}.avl b{color:var(--ink);font-weight:600}
+.al{list-style:none;margin:0 0 6px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.al li{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.al li.fav{border-color:var(--gold)}
+.al .av{width:38px;height:38px;margin:0;font-size:1rem;flex:none}
+.al .nm{font-weight:600;display:block}.al .nt{display:block;font-size:.8rem;color:var(--mut)}
+.al .st{margin-left:auto;font-size:.85rem;font-weight:600;color:var(--acc);white-space:nowrap}
+</style>
+</head>
+<body>
+<main>
+<h1>Fortune’s Weave: Favorites</h1>
+<p class="sub">Pick your favorite characters and compare them. Growth rates and preferences from Serenes Forest, IGN, Game8 and KeenGamer.</p>
+<div class="bar">
+<div class="tabs"><button id="t-all" aria-pressed="true">All</button><button id="t-fav" aria-pressed="false">Favorites</button><button id="t-av" aria-pressed="false">Availability</button></div>
+<input id="q" type="search" placeholder="Search character" aria-label="Search character">
+<select id="pf" aria-label="Filter by type"><option value="all">All types</option><option value="ja">Playable</option><option value="nee">Not playable</option></select>
+<select id="sort" aria-label="Sort"></select>
+<button class="b p" id="add">Add character</button>
+<button class="b" id="bulk-b">Bulk images</button><input type="file" id="bulk-f" accept="image/*" multiple hidden>
+<button class="b" id="io">Import and export</button>
+</div>
+<div id="warn" class="note" hidden>Saving to your browser failed; storage is probably full. Make a backup via Import and export, then delete or shrink images.</div>
+<div id="bulk" class="note" hidden></div>
+<div id="out"></div>
+</main>
+
+<dialog id="ed">
+<h3 id="ed-t">Character</h3>
+<label class="l" style="margin-top:10px">Name<input id="e-name"></label>
+<label class="l" style="margin-top:8px">Role or class<input id="e-role"></label>
+<label class="l" style="margin-top:8px">Type<select id="e-play" style="width:100%"><option value="">Unknown</option><option value="ja">Playable</option><option value="nee">Not playable</option></select></label>
+<div class="l" style="margin-top:8px">Image<div class="imgrow"><span id="e-pv" class="av" style="margin:0;flex:none"></span><input type="file" id="e-file" accept="image/*" aria-label="Choose image"><button class="b" id="e-rm" type="button">Clear</button></div></div>
+<div class="act"><button class="b" id="e-del">Delete</button><button class="b" id="e-x">Cancel</button><button class="b p" id="e-ok">Save</button></div>
+</dialog>
+
+<dialog id="io-d">
+<h3>Import and export</h3>
+<p class="sub" style="margin:6px 0">Copy this JSON as a backup, or paste your own list and press Import.</p>
+<textarea id="io-t" spellcheck="false"></textarea>
+<p id="io-m" class="sub" style="margin:6px 0"></p>
+<div class="act"><button class="b" id="io-x">Close</button><button class="b p" id="io-ok">Import</button></div>
+</dialog>
+
+<script>
+var S=[["hp","HP"],["str","Str"],["mag","Mag"],["dex","Dex"],["spd","Spd"],["def","Def"],["res","Res"],["lck","Lck"],["cha","Cha"]];
+var KEY="fw-fav-v1",st=null,view="all",editId=null,pendingImg="";
+var $=function(i){return document.getElementById(i)};
+function seed(){return{chars:["Cai","Dietrich","Theodora","Leda"].map(function(n,i){return{id:"c"+i,name:n,role:"Main character",stats:{}}}),favs:[]}}
+try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!st||!Array.isArray(st.chars)||!Array.isArray(st.favs))st=seed();
+var R="The Savior’s Army:Eshmel,Fortuna,Hong Hua,Troy;Ribeira Winds:Cai,Tialla,Peter,Ultand;House Lamine:Dietrich,Fabio,Esmeralda,Mikaela;Megaira’s Beacon:Theodora,Bonaventure,Tobias,Lysander,Lilian;Rose Tempest:Leda,Buccar,Sirocco,Mu,Olympia;Mane of Flames:Bertrand,Gaitz,Dante,Goliath,Jester;The Moon’s Lie:Talimun,Ursula,Simon,Luludiya,Fianna;Linarian Morning Dew:Orchel,Diego,Ninae,Seteth,Loretta;Brides of the White Raven:Anatolia,Sha Lan,Nezha,Daito,Halvin;Dagdan Deities:Solel,Aurora,Mars,Kalla;Dagdan Temples:Centurion,Sofia,Anna;Arago’s Elite Squad:Nathan,Creek;Brigid Army:Peppe;Knights of the Thundercloud:Benditz;Silver Knights of Therus:Alexandra;Hal Hali Tribe:Nuzzuo;Palman Rain:Jasmine;Comrades of Braganca:Inioni;Order of Mithras:Laksha;Gaia Brigade:Zarcone;Black Bird Pirates:Kiroika;Recruitable:Guzran,Nydine,Io,Catania,Noctula,Yang Jie,Majide;Other:Sothis,Iliana,Maria";
+function norm(s){return String(s).toLowerCase().replace(/[^a-z0-9]/g,"")}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));$("warn").hidden=true}catch(e){$("warn").hidden=false}}
+if(!st.r2){R.split(";").forEach(function(g){var p=g.split(":");p[1].split(",").forEach(function(n){if(!st.chars.some(function(c){return norm(c.name)===norm(n)}))st.chars.push({id:"r"+norm(n),name:n,role:p[0],stats:{}})})});st.r2=1;save()}
+var PL="eshmel honghua troy cai tialla peter ultand dietrich fabio esmeralda mikaela theodora bonaventure tobias lysander lilian leda buccar sirocco mu olympia bertrand gaitz dante goliath jester talimun ursula simon luludiya fianna orchel diego ninae seteth loretta anatolia shalan nezha daito halvin centurion sofia nathan creek peppe benditz jasmine alexandra nuzzuo inioni zarcone kiroika guzran nydine io catania noctula yangjie majide aswan tahonia klapka".split(" "),NP="fortuna anna solel aurora mars kalla sothis iliana laksha maria".split(" ");
+function mig3(){
+  if(st.r3)return;
+  ["Aswan","Tahonia","Klapka"].forEach(function(n){if(!st.chars.some(function(c){return norm(c.name)===norm(n)}))st.chars.push({id:"r"+norm(n),name:n,role:"Joins in Part III",stats:{}})});
+  st.chars.forEach(function(c){if(!c.play){var k=norm(c.name);c.play=PL.indexOf(k)>-1?"ja":NP.indexOf(k)>-1?"nee":undefined}});
+  st.r3=1;save()}
+mig3();
+var RT=["Cai","Dietrich","Theodora","Leda"],route=0;
+var AVS="Alexandra:7.2,8.3,6.1,10.3;Benditz:9.3,7.2,8.1,7.3;Bonaventure:,,s,;Buccar:,8.3,8.3,s;Cai:s,,,;Catania:10.3,8.1,7.3,a;Daito:7.3,10.3,5.2,5.2;Dante:10.3,8.2,6.3,10.3;Diego:10.3,9.3,8.2,8.3;Dietrich:,s,,;Esmeralda:7.2,s,9.3,6.3;Fabio:,s,,9.3;Fianna:8.3,7.3,9.3,5.3;Gaitz:,10.3,,;Goliath:7.3,6.3,9.3,10.3;Guzran:a,8.3,8.3,3.1;Halvin:5.3,9.3,7.3,7.3;Inioni:8.3,8.3,9.1,7.1;Io:10.3,3.2,10.3,6.1;Jasmine:8.1,9.3,8.3,4.2;Jester:10.3,6.3,9.3,10.3;Kiroika:8.3,4.1,10.3,4.1;Leda:,,,s;Lilian:8.2,8.2,s,7.2;Loretta:7.3,9.3,5.3,5.3;Luludiya:9.3,9.3,7.3,7.3;Lysander:8.3,6.3,s,7.3;Majide:5.2,8.3,8.3,9.3;Mikaela:5.3,s,8.3,6.3;Mu:9.3,7.3,9.3,s;Nezha:6.3,10.3,6.2,9.3;Ninae:6.3,8.3,6.3,8.3;Noctula:4.1,6.1,3.1,8.3;Nuzzuo:6.2,9.1,6.1,9.3;Nydine:6.1,5.2,5.3,10.3;Olympia:8.3,6.3,9.3,s;Peppe:9.1,8.3,7.2,;Peter:s,8.3,7.3,10.3;Seteth:6.3,,6.3,10.3;Sha Lan:,10.3,,8.3;Simon:8.3,7.3,7.3,6.3;Sirocco:9.3,9.3,5.1,s;Sofia:9.3,9.3,a,7.3;Theodora:,,s,;Tialla:s,9.3,10.3,8.3;Tobias:,,s,;Ultand:a,5.3,6.3,8.3;Ursula:10.3,7.3,9.3,;Yang Jie:3.2,a,9.3,8.3;Zarcone:8.3,7.3,4.1,5.2";
+var AVD={};AVS.split(";").forEach(function(e){var p=e.split(":");AVD[norm(p[0])]=p[1].split(",")});
+var PS=[["Creek","Part II, chapter 2","Finish the paralogue “My Late Sister’s Accessory” in Part I.","S2"],["Nathan","Part II, chapter 3","Have Creek land the mercy blow on Nathan.","S2"],["Hong Hua","Part III","Automatic, also in the prologue.","S3"],["Troy","Part III","Automatic, also in the prologue.","S3"],["Orchel","Part III, section 1","Finish her paralogue.","S3"],["Talimun","Part III, section 1","Finish his paralogue.","S3"],["Anatolia","Part III, section 1","Finish her paralogue.","S3"],["Bertrand","Part III, section 1","Finish his paralogue.","S3"],["Centurion","Part III","Finish the quest “Rescue Centurio”.","S3"],["Aswan","Part III, section 5","Automatic.","S3"],["Tahonia","Part III, section 5","Automatic.","S3"],["Klapka","Part III, section 6","Automatic.","S3"]];
+var PD={};PS.forEach(function(p){PD[norm(p[0])]=p});
+var ALIAS={luludiya:"ludia",daito:"dadao",inioni:"inyoni",kiroika:"kiroc",centurion:"centurio",kale:"kalla"};
+function kk(n){var k=norm(n);return ALIAS[k]||k}
+var GR={eshmel:[50,45,45,45,45,35,35,40,50],cai:[45,45,40,45,45,35,35,40,40],tialla:[30,25,45,40,35,20,40,50,45],peter:[40,35,20,60,45,30,25,35,30],ultand:[45,40,40,40,35,35,45,55,50],dietrich:[50,45,30,60,50,40,30,50,60],fabio:[40,25,50,40,35,30,45,35,30],esmeralda:[55,55,20,35,35,45,25,35,30],mikaela:[50,45,30,35,40,40,25,30,40],theodora:[70,50,30,40,40,40,30,30,50],bonaventure:[35,35,45,50,40,30,40,35,40],tobias:[55,60,15,30,25,45,20,40,35],lysander:[45,40,25,35,50,40,25,30,30],lilian:[35,35,30,55,40,30,35,50,25],leda:[40,35,35,50,65,30,35,25,55],buccar:[50,50,20,40,25,45,20,30,35],sirocco:[40,40,40,50,45,35,35,50,45],mu:[50,50,25,50,50,40,30,30,40],olympia:[35,35,50,35,35,30,40,40,40],bertrand:[50,55,15,50,45,45,20,30,50],gaitz:[50,50,20,45,40,45,25,40,45],jester:[40,35,15,45,60,35,25,40,40],goliath:[55,60,5,30,15,50,20,35,20],dante:[30,30,45,40,40,20,40,45,30],orchel:[30,60,45,20,10,60,60,20,60],diego:[45,40,20,60,45,35,20,35,30],loretta:[35,35,35,40,55,30,40,30,30],seteth:[45,45,30,45,40,40,35,30,50],ninae:[45,45,35,45,35,35,45,50,40],anatolia:[40,35,50,45,50,35,40,40,50],nezha:[45,45,25,50,45,35,25,30,25],halvin:[35,35,30,60,45,30,25,40,35],dadao:[50,55,20,35,30,45,20,25,30],shalan:[35,30,45,50,35,30,45,35,40],talimun:[45,40,45,45,40,35,40,60,50],ursula:[40,35,35,50,50,35,30,40,45],ludia:[40,35,20,45,55,30,20,30,30],fianna:[30,35,55,40,30,20,45,25,40],simon:[50,50,20,40,35,40,25,50,35],alexandra:[30,35,35,45,55,30,40,50,50],benditz:[50,35,20,50,35,35,25,30,35],catania:[35,35,35,50,55,30,35,40,45],guzran:[45,45,20,45,50,35,20,45,30],inyoni:[40,50,20,40,35,40,30,40,30],io:[45,40,25,45,35,40,25,35,35],jasmine:[50,40,20,45,30,45,25,40,45],kiroc:[55,40,15,50,55,30,15,30,25],majide:[65,50,15,30,20,40,10,25,5],noctula:[50,45,20,40,45,40,20,35,30],nuzzuo:[50,50,15,45,55,20,15,25,35],nydine:[45,40,30,40,45,30,25,35,35],peppe:[30,30,25,45,60,30,30,45,30],sofia:[35,30,45,40,30,25,40,30,40],yangjie:[50,30,40,35,35,30,40,40,25],zarcone:[40,30,20,60,35,30,25,30,15],creek:[45,50,15,50,60,35,20,30,35],nathan:[55,60,15,60,25,45,15,25,30],honghua:[40,30,45,45,45,30,45,30,40],troy:[40,45,45,40,50,30,30,30,30],centurio:[45,45,25,50,40,50,30,30,30],aswan:[40,35,10,50,40,30,15,30,20],tahonia:[65,50,5,40,20,45,35,20,40],klapka:[40,40,10,45,25,50,15,25,35],mars:[65,65,10,45,25,60,30,45,55],kalla:[55,50,25,70,50,35,30,40,45],anna:[35,35,35,40,40,30,35,50,35],solel:[35,40,20,35,35,35,35,30,20],aurora:[35,40,20,35,35,35,35,30,20]};
+var GRN="Counts Mu’s personal skill Signs of Growth; Solel and Aurora use the generic The Trident growth rates.";
+var GF={alexandra:"Loves: Eastern Earrings, Strategy Manuscript, Tales of Adventure. Also likes: horse items (Dagda Beard Grass, Mane Ornament, Horse-Grooming Kit), Pegasus Painting",anatolia:"Likes: Bagua Divination Set, occult and rare books, fashion items (Eastern Black Silk, Tales of a Master, Tales of Adventure)",benditz:"Loves: Eastern Black Silk, Eastern Earrings, Eastern Tea Leaves, Strategy Manuscript, Tales of Adventure. Also likes: weapons, military and tactical books, Military Medals, board games, coffee",bonaventure:"Loves: Crimson Ghosh, Strategy Manuscript, Volcano Ghosh. Also likes: books, cookbooks, poetry",buccar:"Loves: Crimson Ghosh, Dual Fish Knives. Also likes: fermented drinks (Ghosh/Shosh), military and training items",cai:"Loves: Arrowhead Gem, Crimson Ghosh, Sharp Fishhook. Also likes: horse items, training and fishing items, good food",catania:"Loves: Eastern Black Silk, Eastern Earrings, Eastern Tea Leaves, Tales of Adventure. Also likes: coffee, paintings, exotic rare items",creek:"Loves: History of a Master. Also likes: Sharp Dagger, The Works of Dante",dadao:"Cervi drinks (all kinds)",dante:"Also likes: coffee (Common/Select/Southern/Orgus/Solomon Coffee), Arrowhead Gem, Crimson Ghosh, The Works of Dante, Magic-Trick Set, Pack of Pastels, books",diego:"Loves: Arrowhead Gem. Also likes: Crimson Ghosh, Joint-Relief Gloves, Protection Figurine, Training Pillar, Training Weights, archery items, board games",dietrich:"Loves (examples): Ginji Cervi, Honey Milk, Honey Pastries, Kitten Figurine, Training Pillar, Training Weights, board games. Also likes: pastries and sweets, paintings, gifts for beauty lovers",esmeralda:"Loves: Eastern Earrings, Tales of Adventure. Also likes: fishing items (Sharp Fishhook, Fishing Rod, Huge Fish Eyeball, Brined Fish Guts), garum, cookbooks",fabio:"Loves: Tales of Adventure, Volcano Ghosh. Also likes: coffee (all kinds), fermented drinks",fianna:"Likes: books, coffee, tea, strong spices",gaitz:"Likes: weapons, tea, horse items (Dagda Beard Grass, Mane Ornament, Horse-Grooming Kit)",goliath:"Loves: Strategy Manuscript, Volcano Ghosh. Also likes: coffee, board games, fermented drinks",guzran:"Loves: Strategy Manuscript, Tales of Adventure, Volcano Ghosh. Also likes: fermented drinks (Ghosh/Shosh), coffee",halvin:"Likes: vegetable items (seeds, bulbs, Potted Vegetables), Magic Set",inyoni:"Likes: archery items (Decorative Arrows, Joint-Relief Gloves, Bow Maintenance Kit), fishing items",io:"Also likes: Horse-Grooming Kit, Mane Ornament, coffee, board games, training items, Protection Figurine",jasmine:"Likes: board games, Garum, cooking items",jester:"Loves: Arrowhead Gem. Also likes: board games, Crimson Ghosh, Dual Fish Knives; Crafting Knives, fashion items, pastries, Saramis sweets",kiroc:"Likes: flowers, fashion items",leda:"Loves: Eastern Black Silk, Eastern Earrings, Tales of Adventure, Volcano Ghosh. Also likes: fermented drinks (Ghosh), horse items, pastries, jewelry",lilian:"Loves: Eastern Earrings, Eastern Tea Leaves, Poems of the Greats, Strategy Manuscript, Tales of Adventure. Also likes: fashion items, flowers (Blue-Rose Bouquet)",loretta:"Likes: pastries and other sweets",ludia:"Loves: Eastern Black Silk, Eastern Earrings, Eastern Love Story, Eastern Tea Leaves, Strategy Manuscript, Tales of Adventure. Also likes: coffee, books, paintings",lysander:"Also likes: Dagda Beard Grass, Eastern Tea Leaves, Horse-Grooming Kit, Mane Ornament, Wing Fletching, Training Pillar, Training Weights, Imitation Medal, weapons",majide:"Loves: Arrowhead Gem, Crimson Ghosh, Dual Fish Knives. Also likes: fermented drinks (Ghosh/Shosh)",mikaela:"Loves: Tales of Adventure, Volcano Ghosh. Also likes: coffee (all kinds), cooking and baking items",mu:"Also likes: Candy Crystals, Honey Pastries, Jamel Milk, Pure-White Cervi, Weak Cervi, Yarc Milk, Pickled Vegetables, Arrowhead Gem, Outdoor Cooking Set",ninae:"Loves: Strategy Manuscript, Tales of Adventure. Also likes: flowers, paintings, Eastern Black Silk, Arrowhead Gem, Crimson Ghosh, Eastern Tea Leaves",noctula:"Loves: Strategy Manuscript, Tales of Adventure. Also likes: training items (Training Pillar, Training Weights)",nuzzuo:"Loves: Arrowhead Gem, Dual Fish Knives. Also likes: Outdoor Cooking Set, cooking items, vegetables",nydine:"Loves: Strategy Manuscript, Tales of Adventure. Also likes: Eastern Love Story, Eastern Tea Leaves, Kitten Figurine, Training Bracelet, Training Weights, archery items, Horse-Grooming Kit, books",olympia:"Loves: Eastern Earrings, Eastern Tea Leaves, Orgus Coffee, Tales of Adventure. Also likes: coffee (all kinds), Skin Balm, Gaudy Bangle",peppe:"Coffee",peter:"Also likes: cervi drinks (all kinds), Ginji Cervi, pastries (Simple, Mellow, Fragrant, Honey and Coffee Pastries), Pastry Cookbook, Saramis sweets, Kitten Figurine",seteth:"Loves: Poems of the Greats, Strategy Manuscript, Tales of Adventure. Also likes: fishing items (Flexible Fishing Rod, Sharp Fishhook, Huge Fish Eyeball), coffee, tea",sirocco:"Loves: Arrowhead Gem, Crimson Ghosh, Volcano Ghosh. Also likes: fermented drinks, books, paintings (especially Portrait of Yu Phas)",simon:"Also likes: Crimson Ghosh, Dual Fish Knives, Protection Figurine, vegetables",sofia:"Loves: Blue-Rose Bouquet, Dual Fish Knives, Volcano Ghosh. Also likes: sweets and pastries, Garum, cooking items, cervi milk",talimun:"Likes: fermented drinks, coffee, rare books, board games, paintings",theodora:"Loves: Portrait of Yu Phas. Also likes: Dagda Beard Grass, Eastern Black Silk, Eastern Tea Leaves, Horse-Grooming Kit, coffee, training and fashion items",tialla:"Also likes: cervi drinks, garum, cookbooks, tea, books, board games, Strategy Manuscript",tobias:"Loves: Strategy Manuscript, Tales of Adventure, Volcano Ghosh. Also likes: fermented drinks (Ghosh/Shosh), cookbooks",ultand:"Loves: Blue-Rose Bouquet, Crimson Ghosh, Eastern Love Story, Garum, Outdoor Cooking Set, Pastry Cookbook. Also likes: cookbooks, books",ursula:"Also likes: coffee, Arrowhead Gem, Crimson Ghosh, Eastern Love Story, Kitten Figurine, Mane Ornament, Pack of Pastels; books, board games, paintings, flowers",yangjie:"Loves: Eastern Tea Leaves, Poems of the Greats, Strategy Manuscript, Tales of Adventure, Volcano Ghosh. Also likes: fermented drinks, coffee, books",zarcone:"Loves: Eastern Tea Leaves. Also likes: Eastern Earrings, Gaudy Bangle, Pickled Bulbs, Potted Vegetables, Wing Fletching; vegetables",bertrand:"Special: in Act 1 only Cai can give him a gift; his profile mentions Garum. Also likes: board games, cooking and military items"};
+var LK={eshmel:"Ambitious people, people with great talent, small nameless flowers; board games",cai:"Physical training, catching animals; fishing, spear training",tialla:"Libraries, gossiping about love, being alone, her grandfather; reading, board games",peter:"Mom’s home cooking, ginji fruit, food, cloud watching",ultand:"Caring for others, her family, housekeeping, love stories; saving money, wandering around markets",dietrich:"Objects of beauty, cats, sweets, his little sister; fighting the strong, meditating",fabio:"Suffering, half-forgotten feelings, unraveling beautiful things; drawing, talking with thoughtful people",esmeralda:"Handsome men, throwing her trident, maintaining fishing gear; fishing, carving wooden dolls",mikaela:"Moving her body, caring for others; cooking, baking, making coffee",bonaventure:"Knowledge, talks with sages, learning about countries; cooking, reciting poetry",tobias:"Drinking, fighting, singing, being around people; hunting, camping alone",lysander:"Stargazing, dining with ladies; making javelins, long rides",leda:"Memories of her parents, songs from home, gemstones, applause; tuning her vihuela, long horseback rides",buccar:"Loyalty, training, alcohol, dreaming of Leda’s happiness; cooking, mentoring young people",sirocco:"The goddess Kalla, all women, reciting poetry; reading, drawing portraits",mu:"Brewing new medicines, her father, her mother, eating sweets; making medicinal elixirs, exercising",olympia:"Singing, dancing, playing instruments, writing songs, drawing attention; maintaining her instruments, studying song and dance",bertrand:"Smithing, salted meat, garum, well-made weapons; board games, reading",gaitz:"Tea from Sai, Ferghanan horses, dueling, calligraphy; making tea, practicing martial arts",jester:"The Whitemane demon, fear in his opponents’ eyes; tearing opponents apart, terrorizing the public",goliath:"Rampaging, food, animals, smoking meat; training, competing as a gladiator",dante:"Himself, writing quickly, hunting for dramatic subjects; studying people, watching how others act",orchel:"Animals, listening to music, cleaning, doing laundry; cooking, tending plants, reading",diego:"Walking in the forest, picking medicinal herbs, Orchel; playing the flute, being devoted to Orchel",loretta:"Reliable people, sweets, her friends; sword training, fishing",seteth:"The teachings of Seiros, fishing, his daughter, hardworking people; writing fables, preaching, teaching",ninae:"Pitiable people, talking with spirits, her keepsake necklace, stargazing; daydreaming, training",anatolia:"Hexagram divination, round objects, focusing her mind; martial arts training",nezha:"Physical activity, justice, fighting, good food; combat training, huge meals",halvin:"Growing vegetables, shopping, street performances, cheering crowds; practicing magic tricks, housekeeping",dadao:"Women, machines, good food, fighting; tinkering with machines, protecting the weak",shalan:"Delicious food, drinks, being social, looking after Anatolia; studying",talimun:"Money, adventure, cinnamon, flirting, following his heart; going on dangerous adventures",ursula:"Poetry, animals, flowers in the shade, counting money; reading, drawing",ludia:"Writing stories, looking at art, talking about love and romance; reading adventure stories, shopping",fianna:"Poetry collections, spicy food, coffee, reliable people; praying, going to the theater",simon:"Fights to the death, food from his homeland, being popular with women; carving wooden figures, making preserves",alexandra:"Her parents, Bucephalus, virtuous men, talking about love; combat training, caring for her beloved steed",benditz:"The tactics of the Great August, promising young people; teaching young people, reading",catania:"First-class goods, first-class people, first-class meals; gathering information, making a name for herself",centurio:"Serving the temple of Aurora, patrolling; board games, book study",guzran:"Drinks, women, interesting people, young rookies; boasting",inyoni:"Her family and homeland, hunting, farm work; bow maintenance, bow training, being frugal",io:"Chivalry, self-discipline, his beloved steed Rocinan; caring for his loyal steed, staying calm",jasmine:"Memories of her husband, mercenary friends, wanting to get rich; counting money, running her mercenary band",kiroc:"Thieving, the open sea, ships, obedient subordinates; sailing ships, piracy",majide:"Drinks, women, fighting, being strong; fighting annoying people",noctula:"The city and its people, brawling; exploring the city, training",nuzzuo:"Tradition, honor, great strength; talking with forest spirits",nydine:"Honoring her duties, caring for ornises; improving her combat skills, reading",peppe:"The spirits, the people of Brigid, the sun, his homeland; hunting, people-watching in the city",sofia:"Delicious food, the moment the food is served, eating her fill; preaching about Solel, indulging herself",yangjie:"Alcohol, stories of old, faraway travels, saving the weak; collecting liqueurs, giving sermons",zarcone:"Money, violence, beautiful women, vegetables, drinking with friends; tormenting the weak, plundering",creek:"The green armor his king gave him, beautiful women; studying military strategy, enjoying art",nathan:"The red armor his king gave him, being loyal; every form of combat training",honghua:"Memories of better times",troy:"Her kin, natural scenery, maintaining her weapons",aswan:"Dante’s plays, board games, sewing, beautiful landscapes; book study, bow training",tahonia:"Reading, sewing, training, python techniques, aiding Aswan"};
+var DK={cai:"Cowards, liars, overthinking",peter:"Fighting, scary things, the dark, ghosts",tialla:"Soldiers, big animals, swimming",ultand:"Arrogant or snobbish men, the rich",dietrich:"Things without beauty, restrictions, social status, religion, authority",fabio:"Foolish beasts, overly familiar people, the so-called gods",esmeralda:"Liars, cowards, people who say sharp things",mikaela:"Rowdy drunks, rascals, liars, singing",theodora:"Large insects, people who shift the blame, rule breakers",bonaventure:"Rude or unworthy people",tobias:"Using his brain, complex conversations",lysander:"Cowards, unfaithful people, coffee",leda:"Praying to the gods, vulgar men, snakes, frogs, cooking",buccar:"Vulgar men without ambition, weak-willed youngsters",sirocco:"Hot-tempered men, pretentious food",mu:"Spicy food, people without empathy",olympia:"Insects, cooking, handicrafts",bertrand:"Liars, traitors, spicy food, injustice",gaitz:"Strong-smelling food, people from his past",jester:"Boring people, people who disturb him",goliath:"Chores, vegetables, overthinking, children",dante:"Stains on the wall, time wasters, ignorant people",orchel:"Night, mud, dirty clothes, messy kitchens",diego:"Traitors, nosy people",loretta:"Ghosts, book study, arrogance",seteth:"Enemies of the Church of Seiros, people who approach his daughter",ninae:"Group activities, raw oysters",anatolia:"Cats, Vritra and followers, people who don’t listen",nezha:"Book study, remarks about his height, injustice",halvin:"Evil or creepy people, liars",dadao:"Bland food, monsters, following rules",shalan:"People from the temples, people who ignore reason",talimun:"Easy work, hollow words, show-offs or pushy people",ursula:"Wastefulness, religion, disorder, impudent warriors",ludia:"Uncleanliness, anything that stinks or is sticky",fianna:"Men, sweet food",simon:"Nosy people, naive people",alexandra:"Herself, her uncle",benditz:"People who don’t respect him or ignore him",catania:"Uncoordinated people, vulgar rabble, living in poverty",centurio:"Rule breakers, criminals",guzran:"People who manipulate others, living frugally",inyoni:"Luxury, liars, irresponsible or noisy people",io:"Rulers who don’t care about their people, cowardly courtiers",jasmine:"Nonsense stories, wasting time",kiroc:"Rude behavior or resistance, the rich, ghosts",majide:"A certain tall swordfighter, people of the Order of Mithras",noctula:"Country life, stay-at-home men",nuzzuo:"Change, weakness, corruption",nydine:"Unfairness, neglect of duty, unreasonable behavior",peppe:"People who threaten the peace, discrimination",sofia:"Food that tastes bad, the loneliness of the dinner table",yangjie:"Blind faith, rigid rules",zarcone:"Poverty, people who surpass him, honesty and fairness",creek:"Foolishness",nathan:"People who don’t take loyalty seriously",honghua:"Dagda the Great, the gods, himself",troy:"Dagda the Great, the temples, Vritra",aswan:"People without manners, fights",tahonia:"Bedbugs, alcohol"};
+var PE={eshmel:"A true hero, born to bring light to the world, like the Herald of the Pale Raven from an old poem. Traveling at Sothis’s request with Fortuna to the past to gather allies and defeat the demon Balor.",cai:"A lively boy, motivated by love for his family. A natural talent in the tournament arena.",dietrich:"A foreign swordsman who duels to quench his thirst. His blade bathes his enemies in deadly light.",theodora:"The fearless queen of Saramis. Her unwavering determination lets her take on any challenge.",leda:"A dancer and player of enchanting music, who evades counterattacks with ease and grace.",tialla:"A tactical genius whose ingenious strategy makes full use of her allies’ skills.",creek:"Sarcastic and slightly cynical; fights defensively and toys with his enemies. Cherishes the green armor his king gave him and has an eye for beautiful women.",bertrand:"Feared for his strength, but he has a noble, virtuous side that longs for peace."};
+function cell(v){if(!v)return"–";if(v==="a")return"automatic";if(v==="s")return"from the start";var p=v.split(".");return"R"+p[0]+" · S"+p[1]}
+function lineFor(c){var k=norm(c.name),a=AVD[k],p=PD[k];
+  if(a)return RT.map(function(n,i){return'<span><b>'+n+'</b> '+cell(a[i])+'</span>'}).join("");
+  return p?'<span><b>'+p[1]+'</b></span>':""}
+function ctHtml(c){var k=kk(c.name),t=[];
+  if(GR[k])t.push(["Growth",'<span>Growth rates (no class bonuses)'+(k==="mu"?" · "+GRN:"")+'</span>'+S.map(function(s,i){return'<b>'+s[1]+' '+GR[k][i]+'%</b>'}).join("")]);
+  if(GF[k])t.push(["Gifts",esc(GF[k])]);
+  if(LK[k])t.push(["Likes &amp; interests",esc(LK[k])]);
+  if(DK[k])t.push(["Dislikes",esc(DK[k])]);
+  if(PE[k])t.push(["Personality",esc(PE[k])]);
+  if(!t.length)return"";
+  return'<div class="ct"><div class="ctb">'+t.map(function(x,i){return'<button type="button" data-cti="'+i+'" aria-pressed="'+(i===0)+'">'+x[0]+'</button>'}).join("")+'</div>'+t.map(function(x,i){return'<p'+(i?' hidden':'')+'>'+x[1]+'</p>'}).join("")+'</div>'}
+function ttl(k){return k==="0"?"From the start":k==="1"?"Automatic":k[0]==="R"?"Renown "+(+k.slice(1)):k==="S2"?"Part II (all routes)":"Part III (all routes)"}
+function item(c,n){var f=st.favs.indexOf(c.id)>-1,p=PD[norm(c.name)];
+  return'<li'+(f?' class="fav"':'')+'>'+av(c)+'<span><span class="nm">'+(f?'★ ':'')+esc(c.name)+'</span>'+(p?'<span class="nt">'+esc(p[1])+'. '+esc(p[2])+'</span>':'')+'</span>'+(n?'<span class="st">'+n+'</span>':'')+'</li>'}
+function availHtml(list){
+  var G={},no=[],h='<div class="tabs" style="width:max-content;max-width:100%;overflow-x:auto;margin-bottom:12px">'+RT.map(function(n,i){return'<button data-rt="'+i+'" aria-pressed="'+(i===route)+'">'+n+'</button>'}).join("")+'</div>'+
+    '<p class="sub">R = renown (rises through missions, subquests and paralogues), S = support with your lord. Part I applies to the chosen route, Parts II and III to all routes.</p>';
+  function put(k,c,n){(G[k]=G[k]||[]).push([c,n])}
+  list.forEach(function(c){var k=norm(c.name),a=AVD[k],p=PD[k];
+    if(a){var v=a[route];
+      if(!v)no.push(c);
+      else if(v==="s")put("0",c,"");
+      else if(v==="a")put("1",c,"");
+      else{var x=v.split(".");put("R"+("0"+x[0]).slice(-2),c,"S"+x[1])}}
+    else if(p)put(p[3],c,"")});
+  var fv=function(x){return st.favs.indexOf(x[0].id)>-1};
+  Object.keys(G).sort().forEach(function(k){
+    G[k].sort(function(a,b){return fv(b)-fv(a)||a[0].name.localeCompare(b[0].name)});
+    h+='<h2 class="gh">'+ttl(k)+' <small>('+G[k].length+')</small></h2><ul class="al">'+G[k].map(function(x){return item(x[0],x[1])}).join("")+'</ul>'});
+  if(no.length)h+='<h2 class="gh">Not on this route <small>('+no.length+')</small></h2><p class="sub">'+no.map(function(c){return esc(c.name)}).join(", ")+'</p>';
+  if(!list.length)h+='<p class="empty">No characters found.</p>';
+  return h}
+function groups(list,card){
+  var h="";
+  [["ja","Playable"],["nee","Not playable"],[undefined,"Unknown"]].forEach(function(x){
+    var l=list.filter(function(c){return c.play===x[0]});
+    if(l.length)h+='<h2 class="gh">'+x[1]+' <small>('+l.length+')</small></h2><div class="grid">'+l.map(card).join("")+'</div>'});
+  return h}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function av(c){return c.img?'<img class="av" src="'+esc(c.img)+'" alt="">':'<span class="av">'+esc(c.name.charAt(0))+'</span>'}
+function pv(){$("e-pv").innerHTML=pendingImg?'<img src="'+esc(pendingImg)+'" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top">':esc(($("e-name").value||"?").charAt(0))}
+
+$("sort").innerHTML='<option value="fav">Favorites first</option><option value="name">Sort by name</option>';
+
+function render(){
+  var q=$("q").value.toLowerCase(),sort=$("sort").value;
+  var list=st.chars.filter(function(c){return (c.name+" "+c.role).toLowerCase().indexOf(q)>-1});
+  var pf=$("pf").value;if(pf!=="all")list=list.filter(function(c){return c.play===pf});
+  if(view==="av"){$("out").innerHTML=availHtml(list);return}
+  if(view==="fav")list=list.filter(function(c){return st.favs.indexOf(c.id)>-1});
+  list.sort(function(a,b){if(sort==="fav"){var d=(st.favs.indexOf(b.id)>-1)-(st.favs.indexOf(a.id)>-1);return d||a.name.localeCompare(b.name)}return a.name.localeCompare(b.name)});
+  var h="";
+  if(!list.length){h='<p class="empty">'+(view==="fav"?"You have no favorites yet. Click the star on a character to pick one.":"No characters found.")+'</p>'}
+  else if(view==="fav"){
+    h='<div class="tw"><table><thead><tr><th></th>'+list.map(function(c){return'<th>'+av(c)+esc(c.name)+'</th>'}).join("")+'</tr></thead><tbody><tr><td>Type</td>'+list.map(function(c){return'<td>'+(c.play==="ja"?"Playable":c.play==="nee"?"Not playable":"–")+'</td>'}).join("")+'</tr>'+RT.map(function(n,i){return'<tr><td>Route '+n+'</td>'+list.map(function(c){var a=AVD[norm(c.name)],p=PD[norm(c.name)];return'<td>'+(a?cell(a[i]):p?p[1]:"–")+'</td>'}).join("")+'</tr>'}).join("");
+    if(list.some(function(c){return GR[kk(c.name)]}))h+='<tr><td>Growth total</td>'+list.map(function(c){var g=GR[kk(c.name)];return'<td>'+(g?g.reduce(function(a,b){return a+b},0)+'%':'–')+'</td>'}).join("")+'</tr>';
+    h+='</tbody></table></div>';
+  } else {
+    var card=function(c){
+      var f=st.favs.indexOf(c.id)>-1;
+      return'<article class="card'+(f?' fav':'')+'"><button class="ph" data-edit="'+c.id+'" aria-label="Change image: '+esc(c.name)+'">'+(c.img?'<img src="'+esc(c.img)+'" alt="'+esc(c.name)+'" loading="lazy">':'<span class="ini">'+esc(c.name.charAt(0))+'</span>')+'</button><div class="top"><div><h3>'+esc(c.name)+'</h3><small>'+esc(c.role)+'</small></div>'+
+      '<button class="star'+(f?' on':'')+'" data-fav="'+c.id+'" aria-pressed="'+f+'" aria-label="Favorite: '+esc(c.name)+'">'+(f?'★':'☆')+'</button></div>'+
+      (lineFor(c)?'<p class="avl">'+lineFor(c)+'</p>':'')+ctHtml(c)+'<button class="b" data-edit="'+c.id+'">Edit</button></article>'};
+    h=groups(list,card);
+  }
+  $("out").innerHTML=h;
+}
+
+function openEdit(id){
+  editId=id;var c=id?st.chars.filter(function(x){return x.id===id})[0]:{name:"",role:""};
+  $("ed-t").textContent=id?"Edit character":"New character";
+  $("e-name").value=c.name;$("e-role").value=c.role||"";pendingImg=c.img||"";pv();$("e-play").value=c.play||"";
+  $("e-del").style.display=id?"":"none";$("e-del").textContent="Delete";
+  $("ed").showModal();
+}
+$("e-ok").onclick=function(){
+  var name=$("e-name").value.trim();if(!name){$("e-name").focus();return}
+  if(editId){var c=st.chars.filter(function(x){return x.id===editId})[0];c.name=name;c.role=$("e-role").value.trim();c.img=pendingImg;c.play=$("e-play").value||undefined}
+  else st.chars.push({id:"c"+Date.now(),name:name,role:$("e-role").value.trim(),stats:{},img:pendingImg,play:$("e-play").value||undefined});
+  save();$("ed").close();render();
+};
+$("e-x").onclick=function(){$("ed").close()};
+$("e-name").oninput=function(){if(!pendingImg)pv()};
+$("e-rm").onclick=function(){pendingImg="";pv()};
+$("e-file").onchange=function(){
+  var inp=this,f=inp.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){var im=new Image();
+    im.onload=function(){var s=Math.min(1,640/Math.max(im.width,im.height)),cv=document.createElement("canvas");
+      cv.width=Math.round(im.width*s);cv.height=Math.round(im.height*s);
+      var x=cv.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,cv.width,cv.height);x.drawImage(im,0,0,cv.width,cv.height);
+      pendingImg=cv.toDataURL("image/jpeg",.82);pv();inp.value=""};
+    im.src=r.result};
+  r.readAsDataURL(f)};
+$("e-del").onclick=function(){
+  if($("e-del").textContent!=="Are you sure?"){$("e-del").textContent="Are you sure?";return}
+  st.chars=st.chars.filter(function(x){return x.id!==editId});st.favs=st.favs.filter(function(x){return x!==editId});
+  save();$("ed").close();render();
+};
+$("add").onclick=function(){openEdit(null)};
+$("io").onclick=function(){$("io-t").value=JSON.stringify(st,null,1);$("io-m").textContent="";$("io-d").showModal()};
+$("io-x").onclick=function(){$("io-d").close()};
+var AL={tiara:"tialla",kouka:"honghua",troia:"troy",scirocco:"sirocco",buccaneer:"buccar",bonaparte:"bonaventure",michaela:"mikaela",kireek:"creek",karla:"kalla",salan:"shalan"};
+function shrink(f,cb){var r=new FileReader();r.onerror=function(){cb(null)};r.onload=function(){var im=new Image();im.onerror=function(){cb(null)};im.onload=function(){var s=Math.min(1,480/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*s);cv.height=Math.round(im.height*s);var x=cv.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,cv.width,cv.height);x.drawImage(im,0,0,cv.width,cv.height);cb(cv.toDataURL("image/jpeg",.72))};im.src=r.result};r.readAsDataURL(f)}
+$("bulk-b").onclick=function(){$("bulk-f").click()};
+$("bulk-f").onchange=function(){
+  var files=[].slice.call(this.files),inp=this,ok=0,bad=[],i=0;
+  function next(){
+    if(i>=files.length){save();render();inp.value="";var b=$("bulk");b.hidden=false;b.textContent=ok+" images linked."+(bad.length?" Not recognized: "+bad.join(", ")+".":"");return}
+    var f=files[i++],tok=norm(f.name.replace(/\.[^.]+$/,"").split("_").pop());tok=AL[tok]||tok;
+    var c=st.chars.filter(function(x){return norm(x.name)===tok})[0];
+    if(!c){bad.push(f.name);return next()}
+    shrink(f,function(d){if(d){c.img=d;ok++}else bad.push(f.name);next()})}
+  next()};
+$("io-ok").onclick=function(){
+  try{var d=JSON.parse($("io-t").value);
+    if(!Array.isArray(d.chars))throw 0;
+    d.chars=d.chars.filter(function(c){return c&&c.name}).map(function(c,i){return{id:String(c.id||"i"+i),name:String(c.name),role:String(c.role||""),stats:c.stats&&typeof c.stats==="object"?c.stats:{},img:typeof c.img==="string"&&c.img.indexOf("data:image/")===0?c.img:"",play:c.play==="ja"||c.play==="nee"?c.play:undefined}});
+    d.favs=Array.isArray(d.favs)?d.favs.map(String):[];
+    d.r2=1;st=d;mig3();save();render();$("io-d").close();
+  }catch(e){$("io-m").textContent="This is not a valid list. It must contain an object with a chars array."}
+};
+document.addEventListener("click",function(e){
+  var tb=e.target.closest("[data-cti]");
+  if(tb){var w=tb.closest(".ct"),i=+tb.dataset.cti;
+    [].slice.call(w.querySelectorAll("p")).forEach(function(p,j){p.hidden=j!==i});
+    [].slice.call(w.querySelectorAll(".ctb button")).forEach(function(b,j){b.setAttribute("aria-pressed",j===i)});
+    return}
+  var f=e.target.closest("[data-fav]"),ed=e.target.closest("[data-edit]");
+  if(f){var id=f.dataset.fav,ix=st.favs.indexOf(id);if(ix>-1)st.favs.splice(ix,1);else st.favs.push(id);save();render()}
+  if(ed)openEdit(ed.dataset.edit);
+});
+function tab(v){view=v;$("t-all").setAttribute("aria-pressed",v==="all");$("t-fav").setAttribute("aria-pressed",v==="fav");$("t-av").setAttribute("aria-pressed",v==="av");render()}
+$("t-all").onclick=function(){tab("all")};$("t-fav").onclick=function(){tab("fav")};$("t-av").onclick=function(){tab("av")};
+document.addEventListener("click",function(e){var b=e.target.closest("[data-rt]");if(b){route=+b.dataset.rt;render()}});
+$("q").oninput=render;$("sort").onchange=render;$("pf").onchange=render;
+render();
+</script>
+</body>
+</html>
